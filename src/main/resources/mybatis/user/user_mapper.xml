@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mybatis.user.user_mapper">
+
+	<insert id="registerUser" parameterType="Payload">
+		<![CDATA[
+			INSERT INTO USER 
+				(
+					USER_ID,
+					USER_PASSWORD,
+					USER_NAME,
+					USER_PHONENUM,
+					USER_CARNUM,
+					USER_CARTYPE,
+					USER_CARNUMCOLOR,
+					USER_BANKNAME,
+					USER_ACCOUNT,
+					USER_COURYAREA
+				)
+			VALUES
+				(
+					#{userId},
+					#{password},
+					#{userName},
+					#{phoneNum},
+					#{carNum},
+					#{carType},
+					#{carNumColor},
+					#{bankName},
+					#{accountNum},
+					#{couryArea}
+				)
+		]]>
+	</insert>
+	
+	<select id="selectUserName" parameterType="Payload" resultType="Payload">
+		<![CDATA[
+			SELECT 
+				USER_NAME 
+			FROM 
+				USER 
+			WHERE 
+				USER_SEQUENCE = #{userSeq}
+		]]>
+	</select>
+</mapper>
