@@ -1,5 +1,8 @@
 package com.backend.app.model;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -32,5 +35,34 @@ public class Payload extends HashMap<String, Object> {
 	public <E> Payload set(String key, E obj) {
 		super.put(key, obj);
 		return this;
+	}
+	
+	public String getString(String key) {
+		Object obj = this.get(key);
+		String result = "";
+		if (obj != null) {
+			if (obj instanceof String) {
+				result = (String) obj;
+			} else if (obj instanceof Integer) {
+				result = obj.toString();
+			} else if (obj instanceof Long) {
+				result = obj.toString();
+			} else if (obj instanceof Float) {
+				result = obj.toString();
+			} else if (obj instanceof Double) {
+				result = obj.toString();
+			} else if (obj instanceof Boolean) {
+				result = obj.toString();
+			} else if (obj instanceof Short) {
+				result = obj.toString();
+			} else if (obj instanceof Date) {
+				result = obj.toString();
+			} else if (obj instanceof BigInteger) {
+				result = ((BigInteger) obj).toString();
+			} else if (obj instanceof BigDecimal) {
+				result = ((BigDecimal) obj).toString();
+			}
+		}
+		return result;
 	}
 }
