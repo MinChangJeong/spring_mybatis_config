@@ -6,24 +6,26 @@ import com.backend.app.business.common.SuperService;
 import com.backend.app.model.Payload;
 
 @Service
-public class UserService extends SuperService{
+public class UserService extends SuperService {
 
-//	public Payload registerUser(Payload request) {
-//		Payload result = new Payload();
-//		
-//		try {
-//			
-//			result.set("REPL_CD", SUCCESS_CD);
-//			result.set("REPL_MSG", SUCCESS_MSG);
-//			
-//		} catch (Exception ex) {
-//			result.set("REPL_CD", DEFAULT_ERROR_CD);
-//			result.set("REPL_MSG", DEFAULT_ERROR_MSG);
-//			ex.printStackTrace();
-//		}
-//		
-//		return result;
-//	}
+	public Payload registerUser(Payload request) {
+		Payload result = new Payload();
+		
+		try {
+			
+			insert("mybatis.user.user_mapper.registerUser", request);
+			
+			result.set("REPL_CD", SUCCESS_CD);
+			result.set("REPL_MSG", SUCCESS_MSG);
+			
+		} catch (Exception ex) {
+			result.set("REPL_CD", DEFAULT_ERROR_CD);
+			result.set("REPL_MSG", DEFAULT_ERROR_MSG);
+			ex.printStackTrace();
+		}
+		
+		return result;
+	}
 	
 	public Payload selectUserName(Payload request) {
 		Payload result = new Payload();

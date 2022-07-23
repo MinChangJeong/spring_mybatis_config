@@ -17,8 +17,8 @@ import com.google.gson.JsonObject;
 public class NCoudMap {
 	
 	final String DRIVIE_REQUEST_URL = "https://naveropenapi.apigw.ntruss.com/map-direction/v1/driving"; // ncloud 네비게이션 사용을 위한 요청 URL
-	final String API_KEY_ID = ""; // ncloud api 인증키
-	final String API_KEY = ""; // ncloud api 비밀키
+	final String API_KEY_ID = "5dX5ijptZ054qtlmuaId"; // ncloud api 인증키
+	final String API_KEY = "krvuxmgTN4p48Z9eynvEAy1iv8WriAEauykHzA3T"; // ncloud api 비밀키
 	
 	// NCldoud Diriving 
 	public String navigate(Payload payload) {
