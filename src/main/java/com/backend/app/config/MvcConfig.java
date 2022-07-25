@@ -20,7 +20,7 @@ import com.zaxxer.hikari.HikariDataSource;
 
 @EnableWebMvc 
 @Configuration
-@ComponentScan(basePackages = {"com.backend.app.business","com.backend.app.model"})
+@ComponentScan(basePackages = {"com.backend.app.business","com.backend.app.model", "com.backend.app.common"})
 public class MvcConfig extends WebMvcConfigurerAdapter {
     
 	@Override

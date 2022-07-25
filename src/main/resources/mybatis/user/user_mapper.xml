@@ -21,19 +21,31 @@
 				)
 			VALUES
 				(
-					#{userId},
-					#{password},
-					#{userName},
-					#{phoneNum},
-					#{carNum},
-					#{carType},
-					#{carNumColor},
-					#{bankName},
-					#{accountNum},
-					#{couryArea}
+					#{USER_ID},
+					#{USER_PASSOWRD},
+					#{USER_NAME},
+					#{USER_PHONENUM},
+					#{USER_CARNUM},
+					#{USER_CARTYPE},
+					#{USER_CARNUMCOLOR},
+					#{USER_BANKNAME},
+					#{USER_ACCOUNT},
+					#{USER_COURYAREA}
 				)
 		]]>
 	</insert>
+	
+	<select id="login" parameterType="Payload" resultType="Payload">
+      <![CDATA[
+         SELECT 
+            USER_SEQUENCE
+         FROM 
+            USER 
+         WHERE 
+            USER_PASSWORD = #{USER_PASSWORD}
+         AND USER_ID = #{USER_ID}
+      ]]>
+   </select>
 	
 	<select id="selectUserName" parameterType="Payload" resultType="Payload">
 		<![CDATA[

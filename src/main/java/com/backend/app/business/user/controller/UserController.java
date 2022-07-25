@@ -21,21 +21,18 @@ public class UserController{
     UserService userService;
 
     @ResponseBody
+    @PostMapping("/login")
+    public ResponseEntity<Payload> login(@RequestBody Payload request) {
+       Payload result = new Payload();     
+       result = userService.login(request);   
+       return ResponseEntity.ok(result);
+    }
+    
+    @ResponseBody
     @PostMapping("/registerUser")
     public ResponseEntity<Payload> registerUser(@RequestBody Payload request) {
     	Payload result = new Payload();
-    	
-    	JSONObject request_json =  new JSONObject(request);
-    	
-    	String user_id = request_json.getString("USER_ID");
-    	String password = request_json.getString("PASSOWRD");
-    	
-	    Payload param_box = new Payload();
-	    param_box.set("userId", user_id);
-	    param_box.set("password", password);
-    	
-    	
-    	result = userService.registerUser(param_box);	
+    	result = userService.registerUser(request);	
     	return ResponseEntity.ok(result);
     }
     

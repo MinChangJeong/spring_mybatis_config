@@ -37,6 +37,31 @@ public class Payload extends HashMap<String, Object> {
 		return this;
 	}
 	
+	public int getInt(String key) {
+		Object obj = this.get(key);
+		int result = 0;
+		if (obj != null) {
+			if (obj instanceof String) {
+				result = Integer.parseInt((String) obj);
+			} else if (obj instanceof Integer) {
+				result = (Integer) obj;
+			} else if (obj instanceof Long) {
+				result = ((Long) obj).intValue();
+			} else if (obj instanceof Double) {
+				result = ((Double) obj).intValue();
+			} else if (obj instanceof Float) {
+				result = ((Float) obj).intValue();
+			} else if (obj instanceof Short) {
+				result = ((Short) obj).intValue();
+			} else if (obj instanceof BigInteger) {
+				result = ((BigInteger) obj).intValue();
+			} else if (obj instanceof BigDecimal) {
+				result = ((BigDecimal) obj).intValue();
+			}
+		}
+		return result;
+	}
+	
 	public String getString(String key) {
 		Object obj = this.get(key);
 		String result = "";

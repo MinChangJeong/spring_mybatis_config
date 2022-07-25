@@ -4,9 +4,83 @@
 
 <mapper namespace="mybatis.coury.coury_mapper">
 	
-	<select id="getUserCouryResult" parameterType="Payload" resultType="Payload">
+	<select id="autoAssignmentCoury" parameterType="Payload" resultType="Payload">
 		<![CDATA[
-			
+			SELECT 
+				COURY_SEQUENCE,
+				REPLACE(COURY_FROM_ADDRESS, ' ****', '') AS COURY_FROM_ADDRESS,
+				COURY_FROM_NAME,
+				REPLACE(COURY_TO_ADDRESS, ' ****', '') AS COURY_TO_ADDRESS,
+				COURY_TO_NAME,
+				CASE
+				    WHEN WEIGHT >= 0 AND WEIGHT <= 2 THEN 'A'
+				    WHEN WEIGHT >= 3 AND WEIGHT<= 5 THEN 'B'
+				    WHEN WEIGHT >= 6 AND WEIGHT <= 15 THEN 'C'
+				    WHEN WEIGHT >= 16 THEN 'D'
+				END AS WEIGHT,
+				CASE
+				    WHEN SIZE>= 0 AND SIZE <= 80 THEN 'A'
+				    WHEN SIZE>= 81 AND SIZE <= 100 THEN 'B'
+				    WHEN SIZE>= 101 AND SIZE <= 120 THEN 'C'
+				    WHEN SIZE>= 121 THEN 'D'
+				END AS SIZE,
+				CATEGORY,
+				REPLACE(AREA, ',', '') AS AREA,
+				DATE_FORMAT(CONCAT(EXPRESS_DATE, EXPRESS_TIME) , '%Y-%m-%d/%H') AS COURY_DATE
+			FROM COURY
+			WHERE COURY_ASSIGNMENT = 'N'
+			AND DATE_FORMAT(CONCAT(EXPRESS_DATE, EXPRESS_TIME) , '%Y-%m-%d/%H') BETWEEN '2022-05-02/19' AND '2022-05-03/19'
+			AND COURY_TO_ADDRESS like '%마포구%'
+			AND AREA LIKE CONCAT('%', #{area}, '%')
+		]]>
+		<if test='priority != null and priority != ""'>
+			<![CDATA[
+				ORDER BY ${priority} ASC
+			]]>	
+		</if>
+		<![CDATA[
+			LIMIT ${count}
 		]]>
 	</select>
+	
+	<select id="getCouryListByDate" parameterType="Payload" resultType="Payload">
+		<![CDATA[
+			SELECT 
+				USER_SEQUENCE,
+				COURY_DATE,
+				COURY_ASSIGNMENT,
+				COURY_CONDITION,
+				COURY_FROM_ADDRESS,
+				COURY_TO_ADDRRESS,
+				COURY_FROM_NAME,
+				COURY_TO_NAME,
+				COURY_WEIGHT
+			FROM COURY 
+			WHERE USER_SEQUENCE = #{userSeq}
+			AND DATE_FORMAT(COURY_DATE, '%Y-%m-%d') = #{date}
+		]]>
+	</select>
+	
+	<select id="getCouryState" parameterType="Payload" resultType="Payload">
+		<![CDATA[
+			SELECT 
+				COUNT(*) AS CNT
+			FROM COURY 
+			WHERE USER_SEQUENCE = #{userSeq}
+			AND DATE_FORMAT(COURY_DATE, '%Y-%m-%d') = #{date}
+			AND COURY_CONDITION = #{state}
+		]]>
+	</select>
+	
+	<update id="updatePackageName" parameterType="Payload">
+		<![CDATA[
+			UPDATE COURY SET
+				PACKAGE_NAME = #{packageName}
+			WHERE COURY_SEQUENCE IN
+		]]>
+		<foreach collection="couryList" item="coury" open="(" close=")" separator=",">
+			#{coury.COURY_SEQUENCE}
+		</foreach>
+	</update>
+
 </mapper>

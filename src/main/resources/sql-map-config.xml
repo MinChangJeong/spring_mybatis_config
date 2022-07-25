@@ -13,7 +13,6 @@
 	<mappers>
 		<mapper resource="mybatis/user/user_mapper.xml"/>
 		
-		<mapper resource="mybatis/express/express_mapper.xml"/>
-						
+		<mapper resource="mybatis/coury/coury_mapper.xml"/>						
 	</mappers>
 </configuration>
