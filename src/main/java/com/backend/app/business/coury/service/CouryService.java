@@ -24,7 +24,6 @@ public class CouryService extends SuperService{
 	@Autowired
 	NCloudMap ncloudMap;
 	
-
 	public static String getRandomUpperString(int randomNumber) {
 		Random random = new Random();
 		String result = "";
@@ -42,6 +41,69 @@ public class CouryService extends SuperService{
 			else {
 				result += random.nextInt(10);
 			}
+		}
+		
+		return result;
+	}
+	
+	// 할당된 배송 목록 가져오기
+	public Payload getAssignmentedCouryList(Payload request) {
+		Payload result = new Payload();
+		
+		try {
+			PayloadList<Payload> coury_list = selectList("mybatis.coury.coury_mapper.selectAssignmentedCouryList", request);
+			request.set("couryList", coury_list);
+			update("mybatis.coury.coury_mapper.updateCompletedCoury", request);
+			
+			result.set("REPL_CD", SUCCESS_CD);
+			result.set("REPL_MSG", SUCCESS_MSG);
+			
+		} catch (Exception ex) {
+			result.set("REPL_CD", DEFAULT_ERROR_CD);
+			result.set("REPL_MSG", DEFAULT_ERROR_MSG);
+			ex.printStackTrace();
+		}
+		
+		return result;
+	}
+	
+	// 배송 완료 상태 변경(분실/파손, 오배송, 배송완료)
+	public Payload updateCompletedCoury(Payload request) {
+		Payload result = new Payload();
+		
+		try {
+			PayloadList<Payload> coury_list = selectList("mybatis.coury.coury_mapper.selectAssignmentedCouryList", request);
+			request.set("couryList", coury_list);
+			update("mybatis.coury.coury_mapper.updateCompletedCoury", request);
+			
+			result.set("REPL_CD", SUCCESS_CD);
+			result.set("REPL_MSG", SUCCESS_MSG);
+			
+		} catch (Exception ex) {
+			result.set("REPL_CD", DEFAULT_ERROR_CD);
+			result.set("REPL_MSG", DEFAULT_ERROR_MSG);
+			ex.printStackTrace();
+		}
+		
+		return result;
+	}
+	
+	// 확정
+	public Payload confirmCouryList(Payload request) {
+		Payload result = new Payload();
+		
+		try {
+			PayloadList<Payload> coury_list = selectList("mybatis.coury.coury_mapper.selectAssignmentedCouryList", request);
+			request.set("couryList", coury_list);
+			update("mybatis.coury.coury_mapper.updateConfirmCouryList", request);
+			
+			result.set("REPL_CD", SUCCESS_CD);
+			result.set("REPL_MSG", SUCCESS_MSG);
+			
+		} catch (Exception ex) {
+			result.set("REPL_CD", DEFAULT_ERROR_CD);
+			result.set("REPL_MSG", DEFAULT_ERROR_MSG);
+			ex.printStackTrace();
 		}
 		
 		return result;

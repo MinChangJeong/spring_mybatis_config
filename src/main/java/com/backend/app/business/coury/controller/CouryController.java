@@ -59,4 +59,31 @@ public class CouryController {
     	
     	return ResponseEntity.ok(result);
     }
+    
+    @ResponseBody
+    @PostMapping("/confirmCouryList")
+    public ResponseEntity<Payload> confirmCouryList(@RequestBody Payload request) {
+    	Payload result = new Payload();
+
+    	result = couryService.confirmCouryList(request);
+    	return ResponseEntity.ok(result);
+    }
+    
+    @ResponseBody
+    @PostMapping("/updateCompletedCoury")
+    public ResponseEntity<Payload> updateCompletedCoury(@RequestBody Payload request) {
+    	Payload result = new Payload();
+
+    	result = couryService.updateCompletedCoury(request);
+    	return ResponseEntity.ok(result);
+    }
+    
+    @ResponseBody
+    @PostMapping("/getAssignmentedCouryList")
+    public ResponseEntity<Payload> getAssignmentedCouryList(@RequestBody Payload request) {
+    	Payload result = new Payload();
+
+    	result = couryService.getAssignmentedCouryList(request);
+    	return ResponseEntity.ok(result);
+    }
 }

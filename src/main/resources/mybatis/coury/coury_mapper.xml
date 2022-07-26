@@ -83,4 +83,49 @@
 		</foreach>
 	</update>
 
+	<select id="selectAssignmentedCouryList" parameterType="Payload" resultType="Payload">
+		<![CDATA[
+			SELECT COURY_SEQUENCE 
+			FROM COURY WHERE PACKAGE_NAME = #{packageName}
+		]]>
+	</select>
+	
+	<update id="updateConfirmCouryList" parameterType="Payload">
+		<![CDATA[
+			UPDATE COURY SET
+				USER_SEQUENCE = #{userSeq},
+				COURY_ASSIGNMENT = 'Y'
+				COURY_CONDEITION = '미배송'
+			WHERE COURY_SEQUENCE IN
+		]]>
+		<foreach collection="couryList" item="coury" open="(" close=")" separator=",">
+			#{coury.COURY_SEQUENCE}
+		</foreach>
+	</update>
+	
+	<update id="updateCompletedCoury" parameterType="Payload">
+		<![CDATA[
+			UPDATE COURY SET
+				COURY_CONDEITION = #{couryCondition}
+			WHERE COURY_SEQUENCE IN
+		]]>
+		<foreach collection="couryList" item="coury" open="(" close=")" separator=",">
+			#{coury.COURY_SEQUENCE}
+		</foreach>
+	</update>
+
+	<select id="getAssignmentedCouryList" parameterType="Payload" resultType="Payload">
+		<![CDATA[
+			SELECT 
+				COURY_TO_NAME,
+				COURY_TO_ADDRESS,
+				COURY_CONDITION,
+				EXPRESS_STATE
+			FROM COURY
+			WHERE PACKAGE_NAME = #{packageName}
+			AND COURY_ASSIGNMENT = 'Y'
+			AND USER_SEQUENCE = #{userSeq}
+		]]>
+	</select>
+
 </mapper>
